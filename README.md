@@ -1,6 +1,7 @@
 # compose-drag-drop-list
 
-![drag-drop-compose](https://github.com/VincentVInsideApp/compose-drag-drop-list/assets/97438364/04228c0a-a2f5-46dd-92f3-06b6875b9777)
+![drag-drop](https://github.com/VincentVInsideApp/compose-drag-drop-list/assets/97438364/85ae269e-227c-43e1-b073-0182e08e54f2)
+
 
 # Overview
 The DragDropList composable is a composable that enables drag-and-drop reordering of items in a list. It is designed to work seamlessly with Jetpack Compose and can be easily integrated into your Compose-based Android application.
