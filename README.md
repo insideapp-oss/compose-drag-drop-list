@@ -50,7 +50,7 @@ See the example app
 
 ```onMove```: A lambda that is called when an item is moved. It provides the fromIndex and toIndex of the item being moved, allowing you to update your data accordingly.
 
-```onDragFinished``: Called when the drag n drop is terminated. use it for heavy tasks (Room DB update for example)
+```onDragFinished```: Called when the drag n drop is terminated. use it for heavy tasks (Room DB update for example)
 
 ```modifier```: An optional modifier that can be used to customize the appearance and behavior of the DragDropList.
 
