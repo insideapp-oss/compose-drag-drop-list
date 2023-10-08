@@ -65,6 +65,10 @@ class MainActivity : ComponentActivity() {
                             newList[to] = fromItem
                             fruits = newList // Update the mutable state
                             Log.d("DRAG_N_DROP", "Move $to $from")
+                        },
+                        onDragFinished = {
+                            //Do heavy tasks here for example a room database update...
+                            Log.d("DRAG_N_DROP", "Drag is finished")
                         }
                     ) {
                         Card(
