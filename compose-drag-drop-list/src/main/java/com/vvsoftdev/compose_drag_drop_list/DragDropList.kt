@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 fun <T: Any> DragDropList(
     items: List<T>,
     onMove: (Int, Int) -> Unit,
+    onDragFinished: () -> Unit,
     modifier: Modifier = Modifier,
     itemComposable: @Composable (item: T) -> Unit
 ) {
@@ -53,7 +54,11 @@ fun <T: Any> DragDropList(
                             checkOver.let { overscrollJob = scope.launch { dragDropListState.lazyListState.scrollBy(checkOver) } }
                     },
                     onDragStart = { offset -> dragDropListState.onDragStart(offset) },
-                    onDragEnd = { dragDropListState.onDragInterrupted() },
+                    onDragEnd = {
+                        onDragFinished()
+                        dragDropListState.onDragInterrupted()
+
+                                },
                     onDragCancel = { dragDropListState.onDragInterrupted() }
                 )
             },
