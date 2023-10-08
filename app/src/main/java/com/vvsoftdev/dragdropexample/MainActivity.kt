@@ -52,6 +52,7 @@ class MainActivity : ComponentActivity() {
                             )
                         )
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     DragDropList(
                         items = fruits,
@@ -69,7 +70,6 @@ class MainActivity : ComponentActivity() {
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp)
                                 .height(64.dp),
                             elevation = 4.dp,
                             backgroundColor = MaterialTheme.colors.primary,
@@ -86,7 +86,6 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
             }

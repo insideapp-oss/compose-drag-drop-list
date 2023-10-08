@@ -1,9 +1,11 @@
 package com.vvsoftdev.compose_drag_drop_list
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.*
@@ -16,6 +18,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -34,6 +37,7 @@ fun <T: Any> DragDropList(
     val dragDropListState = rememberDragDropListState(onMove = onMove)
 
     LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier
             .pointerInput(Unit) {
                 detectDragGesturesAfterLongPress(
@@ -57,6 +61,13 @@ fun <T: Any> DragDropList(
     ) {
         itemsIndexed(items) { index, item ->
             val currentIndex = rememberUpdatedState(index)
+
+            // Calculate the rotation angle based on the dragged distance
+            val rotationAngle by animateFloatAsState(
+                targetValue = if (currentIndex.value == dragDropListState.currentIndexOfDraggedItem) 10f else 0f,
+                animationSpec = tween(durationMillis = 1000)
+            )
+
             Column(
                 modifier = Modifier
                     .composed {
@@ -68,10 +79,12 @@ fun <T: Any> DragDropList(
                         Modifier
                             .graphicsLayer {
                                 translationY = translationYaxis
+                                rotationZ = rotationAngle
                             }
                     }
                     .background(MaterialTheme.colors.background, shape = RoundedCornerShape(4.dp))
                     .fillMaxWidth()
+                    .zIndex(if (currentIndex.value == dragDropListState.currentIndexOfDraggedItem) 1f else 0f)
             ) {
                 itemComposable(item)
             }
@@ -111,7 +124,7 @@ class DragDropListState(
             lazyListState.getVisibleItemInfoFor(absoluteIndex = it)
         }
 
-    private var overscrollJob by mutableStateOf<Job?>(null)
+    var overscrollJob by mutableStateOf<Job?>(null)
 
     fun onDragStart(offset: Offset) {
         lazyListState.layoutInfo.visibleItemsInfo
